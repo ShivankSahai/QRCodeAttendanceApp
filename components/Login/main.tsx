@@ -1,23 +1,80 @@
 import React,{Component} from 'react'
 import { View,Text,StyleSheet } from 'react-native';
-import {H1, Content, Item, Input, Container, Button} from 'native-base'
+import {H1, Content, Item, Input, Container, Button, Spinner, Toast, Root} from 'native-base'
+import axios from 'axios'
+import Reactotron from 'reactotron-react-native'
 
 export default class Login extends Component<Props,State>{
+    constructor(props){
+        super(props)
+        this.state={
+            loadingLogin:false,
+            email:"",
+            password:""
+        }
+    }
+
+    login=()=>{
+        if(this.state.email && this.state.password){
+            this.setState({loadingLogin:true})
+            let user={
+                email:this.state.email,
+                password:this.state.password
+            }
+    
+            axios.post('https://enigmatic-reaches-41194.herokuapp.com/login',user,{
+                headers:{
+                    'Content-Type':'application/json'
+                }
+            })
+            .then((res)=>{
+                this.setState({loadingLogin:false})
+                if(res.data.success){
+                    this.setState({loadingLogin:false})
+                    Toast.show({
+                        text: res.data.message,
+                        buttonText: "Okay",
+                        type: "success"
+                    })
+                }
+                else{
+                    Toast.show({
+                        text: res.data.message,
+                        buttonText: "Okay",
+                        type: "danger"
+                    })
+                }
+            }).catch((err)=>{
+                Reactotron.log(err)
+            })
+            }
+            else{
+                Toast.show({
+                    text: "Please fill all fields",
+                    buttonText: "Okay",
+                    type: "warning"
+                })
+            }
+    }
+
     render(){
         return(
+            <Root>
             <View style={styles.center}>
                 <Text style={styles.loginHead}>Login</Text>
 
                 <Item style={styles.input} rounded>
-                    <Input placeholder='Email'/>
+                    <Input placeholder='Email' onChangeText={(email) => this.setState({email})} value={this.state.email} />
                 </Item>
 
                 <Item style={styles.input} rounded>
-                    <Input secureTextEntry={true} placeholder='Password'/>
+                    <Input secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})} value={this.state.password} />
                 </Item>
 
-                <Button style={styles.submitBtn}><Text style={styles.btnText}>Submit</Text></Button>
+                {!this.state.loadingLogin && <Button onPress={this.login} style={styles.submitBtn}><Text style={styles.btnText}>Submit</Text></Button>}
+                {this.state.loadingLogin && <Button style={styles.loadingBtn}><Text style={{color:'#ff9100'}}>Submitting </Text><Spinner size="small" color='#ff9100' /></Button>}
             </View>
+            </Root>
         )
     }
 }
@@ -35,11 +92,20 @@ let styles=StyleSheet.create({
         marginBottom:20
     },
     submitBtn:{
-        paddingVertical:20,
-        paddingHorizontal:50,
+        marginTop:20,
+        width:'80%',
         backgroundColor:'#ff9100',
         borderRadius:50,
-        alignSelf:'center'
+        alignSelf:'center',
+        justifyContent:'center'
+    },
+    loadingBtn:{
+        marginTop:20,
+        width:'80%',
+        backgroundColor:'white',
+        borderRadius:50,
+        alignSelf:'center',
+        justifyContent:'center'
     },
     btnText:{
         color:'white'
@@ -53,4 +119,8 @@ let styles=StyleSheet.create({
 })
 
 interface Props {}
-interface State {}
+interface State {
+    email:string
+    password:string
+    loadingLogin:boolean
+}

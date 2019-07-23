@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Login from './components/Login/main'
 import Signup from './components/Signup/main'
+import EventQRCode from './components/UserDashboard/code'
+import UserDashboard from './components/UserDashboard/main'
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Reactotron from 'reactotron-react-native'
 
@@ -23,7 +25,9 @@ export default class App extends Component<Props,State> {
 
     return (
       // <Login />
-      <Signup />
+      // <Signup />
+      // <EventQRCode />
+      <UserDashboard />
     );
   }
 }

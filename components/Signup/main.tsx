@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import { View,Text,StyleSheet,ScrollView } from 'react-native';
-import {H1, Content, Item, Input, Container, Button, Tabs, Tab, TabHeading, Icon} from 'native-base'
+import {H1, Content, Item, Input, Container, Button, Tabs, Tab, TabHeading, Icon, Root, Toast, Spinner} from 'native-base'
 import axios from 'axios'
 import Reactotron from 'reactotron-react-native'
 
@@ -8,6 +8,7 @@ export default class Signup extends Component<Props,State>{
     constructor(props){
         super(props)
         this.state={
+            showToast:false,
             loadingEmployeeSignup:false,
             loadingOrgSignup:false,
 
@@ -24,6 +25,9 @@ export default class Signup extends Component<Props,State>{
     }
 
     signupEmployee=()=>{
+        if(this.state.orgName && this.state.orgEmail && this.state.orgPassword){
+        if(this.state.orgPassword===this.state.orgConfirmPassword){
+        this.setState({loadingEmployeeSignup:true})
         let user={
             name:this.state.name,
             email:this.state.email,
@@ -37,17 +41,50 @@ export default class Signup extends Component<Props,State>{
             }
         })
         .then((res)=>{
-            Reactotron.log(res.data)
+            if(res.data.code==0){
+                this.setState({loadingEmployeeSignup:false})
+                Toast.show({
+                    text: res.data.message,
+                    buttonText: "Okay",
+                    type: "success"
+                })
+            }
+            else{
+                Toast.show({
+                    text: res.data.message,
+                    buttonText: "Okay",
+                    type: "danger"
+                })
+            }
         }).catch((err)=>{
             Reactotron.log(err)
         })
+        }
+        else{
+            Toast.show({
+                text: "Password and Confirm Password should be same",
+                buttonText: "Okay",
+                type: "warning"
+            })
+        }
+        }
+        else{
+            Toast.show({
+                text: "Please fill all fields",
+                buttonText: "Okay",
+                type: "warning"
+            })
+        }
     }
 
     signupOrg=()=>{
+        if(this.state.orgName && this.state.orgEmail && this.state.orgPassword){
+        if(this.state.orgPassword===this.state.orgConfirmPassword){
+            this.setState({loadingOrgSignup:true})
         let org={
-            orgName:this.state.name,
-            orgEmail:this.state.email,
-            orgPassword:this.state.password,
+            orgName:this.state.orgName,
+            orgEmail:this.state.orgEmail,
+            orgPassword:this.state.orgPassword,
             code:1
         }
 
@@ -57,14 +94,45 @@ export default class Signup extends Component<Props,State>{
             }
         })
         .then((res)=>{
-            Reactotron.log(res.data)
+            this.setState({loadingOrgSignup:false})
+            if(res.data.code==0){
+                Toast.show({
+                    text: res.data.message,
+                    buttonText: "Okay",
+                    type: "success"
+                })
+            }
+            else{
+                Toast.show({
+                    text: res.data.message,
+                    buttonText: "Okay",
+                    type: "danger"
+                })
+            }
         }).catch((err)=>{
             Reactotron.log(err)
         })
+        }
+        else{
+            Toast.show({
+                text: "Password and Confirm Password should be same",
+                buttonText: "Okay",
+                type: "warning"
+            })
+        }
+        }
+        else{
+            Toast.show({
+                text: "Please fill all fields",
+                buttonText: "Okay",
+                type: "warning"
+            })
+        }
     }
 
     render(){
         return(
+            <Root>
             <ScrollView>
             <View style={styles.center}>
                 <Text style={styles.signupHead}>Signup</Text>
@@ -90,7 +158,8 @@ export default class Signup extends Component<Props,State>{
                                 <Input secureTextEntry={true} placeholder='Confirm Password' onChangeText={(confirmPassword) => this.setState({confirmPassword})} value={this.state.confirmPassword} />
                             </Item>
 
-                            <Button onPress={this.signupEmployee} style={styles.submitBtn}><Text style={{color:'white'}}>Submit</Text></Button>
+                            {!this.state.loadingEmployeeSignup && <Button onPress={this.signupEmployee} style={styles.submitBtn}><Text style={{color:'white'}}>Submit</Text></Button>}
+                            {this.state.loadingEmployeeSignup && <Button style={styles.loadingBtn}><Text style={{color:'#ff9100'}}>Submitting </Text><Spinner size="small" color='#ff9100' /></Button>}
                         </View>
                     </Tab>
                     <Tab heading={ <TabHeading style={{backgroundColor:'#ff9100'}}><Icon name="business" type="MaterialIcons" style={{color:'white'}} /><Text style={{fontWeight:'bold',marginLeft:10,color:'white'}}>Organisation</Text></TabHeading>}>
@@ -111,13 +180,15 @@ export default class Signup extends Component<Props,State>{
                                 <Input secureTextEntry={true} placeholder='Confirm Password' onChangeText={(orgConfirmPassword) => this.setState({orgConfirmPassword})} value={this.state.orgConfirmPassword} />
                             </Item>
 
-                            <Button onPress={this.signupOrg} style={styles.submitBtn}><Text style={{color:'white'}}>Submit</Text></Button>
+                            {!this.state.loadingOrgSignup && <Button onPress={this.signupOrg} style={styles.submitBtn}><Text style={{color:'white'}}>Submit</Text></Button>}
+                            {this.state.loadingOrgSignup && <Button style={styles.loadingBtn}><Text style={{color:'#ff9100'}}>Submitting </Text><Spinner size="small" color='#ff9100' /></Button>}
                         </View>
                     </Tab>
                 </Tabs>
                 </Container>
             </View>
             </ScrollView>
+            </Root>
         )
     }
 }
@@ -142,6 +213,14 @@ let styles=StyleSheet.create({
         alignSelf:'center',
         justifyContent:'center'
     },
+    loadingBtn:{
+        marginTop:20,
+        width:'100%',
+        backgroundColor:'white',
+        borderRadius:50,
+        alignSelf:'center',
+        justifyContent:'center'
+    },
     center:{
         alignItems:'center',
         justifyContent:'center',
@@ -156,6 +235,7 @@ let styles=StyleSheet.create({
 
 interface Props {}
 interface State {
+    showToast:false
     loadingEmployeeSignup:boolean,
     loadingOrgSignup:boolean,
 
