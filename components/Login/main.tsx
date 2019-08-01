@@ -9,16 +9,16 @@ export default class Login extends Component<Props,State>{
         super(props)
         this.state={
             loadingLogin:false,
-            email:"",
+            username:"",
             password:""
         }
     }
 
     login=()=>{
-        if(this.state.email && this.state.password){
+        if(this.state.username && this.state.password){
             this.setState({loadingLogin:true})
             let user={
-                email:this.state.email,
+                username:this.state.username,
                 password:this.state.password
             }
     
@@ -64,7 +64,7 @@ export default class Login extends Component<Props,State>{
                 <Text style={styles.loginHead}>Login</Text>
 
                 <Item style={styles.input} rounded>
-                    <Input placeholder='Email' onChangeText={(email) => this.setState({email})} value={this.state.email} />
+                    <Input placeholder='Username' onChangeText={(username) => this.setState({username})} value={this.state.username} />
                 </Item>
 
                 <Item style={styles.input} rounded>
@@ -120,7 +120,7 @@ let styles=StyleSheet.create({
 
 interface Props {}
 interface State {
-    email:string
+    username:string
     password:string
     loadingLogin:boolean
 }

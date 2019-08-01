@@ -13,11 +13,13 @@ export default class Signup extends Component<Props,State>{
             loadingOrgSignup:false,
 
             name:"",
+            username:"",
             email:"",
             password:"",
             confirmPassword:"",
 
             orgName:"",
+            orgUserName:"",
             orgEmail:"",
             orgPassword:"",
             orgConfirmPassword:""
@@ -25,11 +27,12 @@ export default class Signup extends Component<Props,State>{
     }
 
     signupEmployee=()=>{
-        if(this.state.orgName && this.state.orgEmail && this.state.orgPassword){
+        if(this.state.orgName && this.state.orgEmail && this.state.orgUserName && this.state.orgPassword){
         if(this.state.orgPassword===this.state.orgConfirmPassword){
         this.setState({loadingEmployeeSignup:true})
         let user={
             name:this.state.name,
+            username:this.state.username,
             email:this.state.email,
             password:this.state.password,
             code:0
@@ -78,11 +81,12 @@ export default class Signup extends Component<Props,State>{
     }
 
     signupOrg=()=>{
-        if(this.state.orgName && this.state.orgEmail && this.state.orgPassword){
+        if(this.state.orgName && this.state.orgEmail && this.state.orgUserName && this.state.orgPassword){
         if(this.state.orgPassword===this.state.orgConfirmPassword){
             this.setState({loadingOrgSignup:true})
         let org={
             orgName:this.state.orgName,
+            orgUserName:this.state.orgUserName,
             orgEmail:this.state.orgEmail,
             orgPassword:this.state.orgPassword,
             code:1
@@ -147,6 +151,10 @@ export default class Signup extends Component<Props,State>{
                             </Item>
 
                             <Item style={styles.input} rounded>
+                                <Input placeholder='Employee Username' onChangeText={(username) => this.setState({username})} value={this.state.username} />
+                            </Item>
+
+                            <Item style={styles.input} rounded>
                                 <Input placeholder='Employee Email' onChangeText={(email) => this.setState({email})} value={this.state.email} />
                             </Item>
 
@@ -166,6 +174,10 @@ export default class Signup extends Component<Props,State>{
                         <View style={styles.tab}>
                             <Item style={styles.input} rounded>
                                 <Input placeholder='Organisation Name' onChangeText={(orgName) => this.setState({orgName})} value={this.state.orgName} />
+                            </Item>
+
+                            <Item style={styles.input} rounded>
+                                <Input placeholder='Organisation Username' onChangeText={(orgUserName) => this.setState({orgUserName})} value={this.state.orgUserName} />
                             </Item>
 
                             <Item style={styles.input} rounded>
@@ -236,16 +248,18 @@ let styles=StyleSheet.create({
 interface Props {}
 interface State {
     showToast:false
-    loadingEmployeeSignup:boolean,
-    loadingOrgSignup:boolean,
+    loadingEmployeeSignup:boolean
+    loadingOrgSignup:boolean
 
-    name:string,
-    email:string,
-    password:string,
-    confirmPassword:string,
+    name:string
+    username:string
+    email:string
+    password:string
+    confirmPassword:string
 
-    orgName:string,
-    orgEmail:string,
-    orgPassword:string,
+    orgName:string
+    orgUserName:string
+    orgEmail:string
+    orgPassword:string
     orgConfirmPassword:string
 }

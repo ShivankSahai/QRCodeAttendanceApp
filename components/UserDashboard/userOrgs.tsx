@@ -12,20 +12,20 @@ export default class UserOrgs extends Component<Props,State>{
         }
     }
 
-    componentDidMount=()=>{
-        let userId='5d335d09e09bdc0017dd4c52'
-        let token=''
-        axios.post('https://enigmatic-reaches-41194.herokuapp.com/userEvents',{userId},{
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization':`Bearer ${token}`
-            }
-        }).then((res)=>{
-            Reactotron.log("Done",res)
-        }).catch((err)=>{
-            Reactotron.log("Error",err)
-        })
-    }
+    // componentDidMount=()=>{
+    //     let userId='5d335d09e09bdc0017dd4c52'
+    //     let token=''
+    //     axios.post('https://enigmatic-reaches-41194.herokuapp.com/userEvents',{userId},{
+    //         headers:{
+    //             'Content-Type':'application/json',
+    //             'Authorization':`Bearer ${token}`
+    //         }
+    //     }).then((res)=>{
+    //         Reactotron.log("Done",res)
+    //     }).catch((err)=>{
+    //         Reactotron.log("Error",err)
+    //     })
+    // }
 
     render(){
         return(

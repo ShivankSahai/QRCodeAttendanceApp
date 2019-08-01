@@ -11,7 +11,7 @@ export default class UserDashboard extends Component<Props,State>{
         super(props)
         this.state={
             eventsButtonActive:false,
-            orgsButtonActive:true
+            orgsButtonActive:false
         }
     }
 
@@ -29,13 +29,15 @@ export default class UserDashboard extends Component<Props,State>{
                 <Text style={styles.name}>Shivank Sahai</Text>
 
                 <View style={styles.buttons3}>
-                    {this.state.eventsButtonActive && <Button onPress={this.toggleBtn} style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>View Events</Text></Button>}
-                    {this.state.orgsButtonActive && <Button onPress={this.toggleBtn} style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>View Organisations</Text></Button>}
+                    {this.state.orgsButtonActive && <Button onPress={this.toggleBtn} style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>View Events</Text></Button>}
+                    {this.state.eventsButtonActive && <Button onPress={this.toggleBtn} style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>View Organisations</Text></Button>}
                     <Button style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>Logout</Text></Button>
                 </View>
 
-                {this.state.eventsButtonActive && <UserEvents />}
-                {this.state.orgsButtonActive && <UserOrgs />}
+                {/* {this.state.eventsButtonActive && <UserEvents />}
+                {this.state.orgsButtonActive && <UserOrgs />} */}
+
+                <UserEvents />
             </View>
         )
     }
