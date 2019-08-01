@@ -59,7 +59,6 @@
 		B921596C0E7E4B10AF8B5BE8 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2CAD57D38C15408A94A4C8C2 /* Zocial.ttf */; };
 		3F6FCFE3B61241CBBE2C02BB /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 354702B6A1CD4B59BA0EEE8C /* libRNSVG.a */; };
 		D1716B77C9C7473E99844AE8 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B84CB4620A4650B54CCBD6 /* libRNSVG-tvOS.a */; };
-		17A84E7168CF48D6BC1C4D30 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BFBD76BA7ED46F6A5F9A9EF /* libRNCamera.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -388,7 +387,6 @@
 		583DE0084B804C3597A85467 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; name = "RNSVG.xcodeproj"; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		354702B6A1CD4B59BA0EEE8C /* libRNSVG.a */ = {isa = PBXFileReference; name = "libRNSVG.a"; path = "libRNSVG.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		E8B84CB4620A4650B54CCBD6 /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; name = "libRNSVG-tvOS.a"; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		8BFBD76BA7ED46F6A5F9A9EF /* libRNCamera.a */ = {isa = PBXFileReference; name = "libRNCamera.a"; path = "libRNCamera.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,7 +416,6 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				3F6FCFE3B61241CBBE2C02BB /* libRNSVG.a in Frameworks */,
-				17A84E7168CF48D6BC1C4D30 /* libRNCamera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,7 +607,6 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				583DE0084B804C3597A85467 /* RNSVG.xcodeproj */,
-				28A8594272EF4A2296F20C69 /* RNCamera.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
