@@ -13,6 +13,7 @@
     "native-base": "^2.12.1",
     "react": "16.8.3",
     "react-native": "0.59.9",
+    "react-native-camera": "^3.0.0",
     "react-native-qrcode-svg": "^5.1.2",
     "react-native-svg": "^9.5.3",
     "react-navigation": "^3.11.0",

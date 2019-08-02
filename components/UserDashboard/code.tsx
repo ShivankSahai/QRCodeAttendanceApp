@@ -14,7 +14,7 @@ export default class EventQRCode extends Component<Props,State>{
                 <View style={styles.qrcode}>
                 <QRCode
                     size={150}
-                    value="5d33723b27f448001781b74b_5d33723b27f448001781b74b_5d33723b27f448001781b74b"
+                    value="5d33723b27f448001781b74b_5d33723b27f448001781b74b_ShivankSahai"
                 />
                 </View>
                 <Button style={styles.back}><Text style={{color:'white'}}>Done</Text></Button>

@@ -4,8 +4,10 @@ import Signup from './components/Signup/main'
 import EventQRCode from './components/UserDashboard/code'
 import UserDashboard from './components/UserDashboard/main'
 import OrgDashboard from './components/OrgDashboard/main'
+import EventScanner from './components/OrgDashboard/eventScanner'
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Reactotron from 'reactotron-react-native'
+import { RNCamera } from 'react-native-camera';
 
 export default class App extends Component<Props,State> {
   render() {
@@ -29,7 +31,9 @@ export default class App extends Component<Props,State> {
       // <Signup />
       // <EventQRCode />
       // <UserDashboard />
-      <OrgDashboard />
+      // <OrgDashboard />
+      <EventScanner />
+      
     );
   }
 }
