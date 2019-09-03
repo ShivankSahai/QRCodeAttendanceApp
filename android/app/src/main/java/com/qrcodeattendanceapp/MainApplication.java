@@ -3,6 +3,9 @@ package com.qrcodeattendanceapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.realm.react.RealmReactPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.reactlibrary.RNReactNativeABeepPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +28,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RealmReactPackage(),
+            new RNGestureHandlerPackage(),
+            new RNReactNativeABeepPackage(),
             new RNCameraPackage(),
             new SvgPackage()
       );

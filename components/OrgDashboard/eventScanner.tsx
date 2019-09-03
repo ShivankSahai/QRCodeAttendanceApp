@@ -1,7 +1,8 @@
 import React,{Component} from 'react'
 import { View,Text,StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import { Icon } from 'native-base';
+import { Icon, Button } from 'native-base';
+import RNBeep from 'react-native-a-beep';
 
 export default class EventScanner extends Component<Props,State>{
     constructor(props){
@@ -24,6 +25,7 @@ export default class EventScanner extends Component<Props,State>{
         })
 
         if(flag==1){
+            RNBeep.beep()
             console.warn("updated")
             this.setState({
                 barcodes:newBarcodes
@@ -46,9 +48,11 @@ export default class EventScanner extends Component<Props,State>{
               borderColor: '#ff9100',
               justifyContent: 'center',
               backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              padding: 30,
+              padding: 20,
               alignItems:'center',
-              flexDirection:'row'
+              flexDirection:'row',
+              position:'absolute',
+              width:'100%'
             }}
           >
             <Text style={{
@@ -56,12 +60,13 @@ export default class EventScanner extends Component<Props,State>{
               backgroundColor: 'transparent',
               fontWeight:'bold',
               fontSize:18
-            }}>ShreySindher</Text><Icon type="MaterialIcons" name="check-circle" style={{color:'green'}} />
+            }}>{data.split('_')[data.split('_').length-1] || 'Incorrect user'}</Text><Icon type="MaterialIcons" name="check-circle" style={{color:'green'}} />
           </View>
         </React.Fragment>
     )
     
     render(){
+        // console.warn(this.state.barcodes.length)
         return(
             <RNCamera
                 ref={ref => {
@@ -69,11 +74,12 @@ export default class EventScanner extends Component<Props,State>{
                     }}
                     style={{
                     flex: 1,
-                    width: '100%',
+                    width: '100%'
                     }}
                     onGoogleVisionBarcodesDetected={this.barcodeRecognized}
                 >
                 {this.renderBarcodes()}
+                <Button style={{width:'80%',backgroundColor:'#ff9100',paddingVertical:40,alignSelf:'center',justifyContent:'center',position:'absolute',top:'90%',borderColor:'black',borderWidth:3}}><Text style={{fontWeight:'bold',fontSize:16,color:'white',alignSelf:'center'}}>Submit</Text></Button>
             </RNCamera>
         )
     }

@@ -37,7 +37,8 @@ export default class UserDashboard extends Component<Props,State>{
                 {/* {this.state.eventsButtonActive && <UserEvents />}
                 {this.state.orgsButtonActive && <UserOrgs />} */}
 
-                <UserEvents />
+                <UserEvents navigation={this.props.navigation} />
+                
             </View>
         )
     }
@@ -63,7 +64,9 @@ let styles=StyleSheet.create({
     }
 })
 
-interface Props {}
+interface Props {
+    navigation:any
+}
 interface State {
     eventsButtonActive:boolean
     orgsButtonActive:boolean

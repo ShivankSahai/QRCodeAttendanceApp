@@ -22,20 +22,16 @@ export default class Login extends Component<Props,State>{
                 password:this.state.password
             }
     
-            axios.post('https://enigmatic-reaches-41194.herokuapp.com/login',user,{
-                headers:{
-                    'Content-Type':'application/json'
-                }
-            })
+            axios.post('http://192.168.43.22:3000/login',user)
             .then((res)=>{
                 this.setState({loadingLogin:false})
                 if(res.data.success){
-                    this.setState({loadingLogin:false})
                     Toast.show({
                         text: res.data.message,
                         buttonText: "Okay",
                         type: "success"
                     })
+                    this.props.navigation.navigate((res.data.code===0)?'UserDashboard':'OrgDashboard')
                 }
                 else{
                     Toast.show({
@@ -45,6 +41,7 @@ export default class Login extends Component<Props,State>{
                     })
                 }
             }).catch((err)=>{
+                this.setState({loadingLogin:false})
                 Reactotron.log(err)
             })
             }
@@ -72,7 +69,9 @@ export default class Login extends Component<Props,State>{
                 </Item>
 
                 {!this.state.loadingLogin && <Button onPress={this.login} style={styles.submitBtn}><Text style={styles.btnText}>Submit</Text></Button>}
-                {this.state.loadingLogin && <Button style={styles.loadingBtn}><Text style={{color:'#ff9100'}}>Submitting </Text><Spinner size="small" color='#ff9100' /></Button>}
+                {this.state.loadingLogin && <Button style={styles.loadingBtn}><Text style={{color:'#ff9100',fontWeight:'bold',fontSize:18}}>Submitting </Text><Spinner size="small" color='#ff9100' /></Button>}
+
+                <Text onPress={()=>{this.props.navigation.navigate('Signup')}} style={styles.signupInstead}>Signup instead</Text>
             </View>
             </Root>
         )
@@ -108,17 +107,28 @@ let styles=StyleSheet.create({
         justifyContent:'center'
     },
     btnText:{
-        color:'white'
+        color:'white',
+        fontWeight:'bold',
+        fontSize:18
     },
     center:{
         alignItems:'center',
         justifyContent:'center',
         flex: 1,
         backgroundColor:'white'
+    },
+    signupInstead:{
+        fontSize:16,
+        color:'black',
+        fontWeight:'bold',
+        textDecorationLine:'underline',
+        marginTop:10
     }
 })
 
-interface Props {}
+interface Props {
+    navigation:any
+}
 interface State {
     username:string
     password:string

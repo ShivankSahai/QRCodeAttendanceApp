@@ -1,57 +1,76 @@
 import React,{Component} from 'react'
 import { View,Text,StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import {H1, Content, Item, Input, Container, Button, Spinner, Toast, Root, Icon, Card, CardItem, Body} from 'native-base'
+import {H1, Content, Item, Input, Container, Button, Spinner, Toast, Root, Icon, Card, CardItem, Body, DatePicker} from 'native-base'
 import axios from 'axios'
 import Reactotron from 'reactotron-react-native'
+import Dialog from "react-native-dialog";
 
 export default class OrgDashboard extends Component<Props,State>{
     constructor(props){
         super(props)
         this.state={
+            dialogVisible: false,
+            chosenDate: new Date(),
             events:[
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 },
                 {
                     eventId:'5d33723b27f448001781b74b',
-                    name:'Learn to Compete'
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
+                },
+                {
+                    eventId:'5d33723b27f448001781b74b',
+                    name:'Learn to Compete',
+                    date:'24/08/2019'
                 }
             ]
         }
@@ -75,22 +94,57 @@ export default class OrgDashboard extends Component<Props,State>{
     //     })
     // }
 
-    takeAttendance=(eventId)=>{
+    showDialog = () => {
+        this.setState({ dialogVisible: true });
+    };
+    
+    handleCancel = () => {
+        this.setState({ dialogVisible: false });
+    };
+    
+    handleAdd = () => {
+        this.setState({ dialogVisible: false });
+    };
 
+    setDate(newDate) {
+        this.setState({ chosenDate: newDate });
     }
 
-    addEvent=()=>{
+    takeAttendance=(eventId)=>{
 
     }
 
     render(){
         return(
             <View style={{alignItems:'center',padding:40}}>
+                <Dialog.Container visible={this.state.dialogVisible}>
+                <Dialog.Title>Add Event</Dialog.Title>
+                <Item regular>
+                    <Input placeholder='Event Name' />
+                </Item>
+                <Text style={{fontSize:18,color:'black',marginTop:10}}>Date: </Text>
+                <DatePicker
+                    defaultDate={new Date()}
+                    minimumDate={new Date()}
+                    locale={"en"}
+                    timeZoneOffsetInMinutes={undefined}
+                    modalTransparent={false}
+                    animationType={"fade"}
+                    androidMode={"default"}
+                    placeHolderText="Select date"
+                    textStyle={{ color: "black",fontWeight:'bold' }}
+                    placeHolderTextStyle={{ color: "#d3d3d3" }}
+                    onDateChange={this.setDate}
+                    disabled={false}
+                />
+                <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+                <Dialog.Button label="Add" onPress={this.handleAdd} />
+                </Dialog.Container>
                 <Text style={styles.welcome}>Welcome,</Text>
                 <Text style={styles.name}>ACM-VIT</Text>
 
                 <View style={styles.buttons3}>
-                    <Button onPress={this.addEvent} style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>Add event</Text></Button>
+                    <Button onPress={this.showDialog} style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>Add event</Text></Button>
                     <Button style={styles.btn3}><Text style={{color:'black',fontWeight:'bold'}}>Logout</Text></Button>
                 </View>
 
@@ -105,6 +159,7 @@ export default class OrgDashboard extends Component<Props,State>{
                                 <Body style={{flexDirection:'row',justifyContent:'center'}}>
                                     <View style={{width:'100%'}}>
                                         <Text style={{fontSize:22,color:'black'}}>{val.name}</Text>
+                                        <Text style={{fontSize:14,color:'grey'}}>{val.date}</Text>
                                     </View>
                                 </Body>
                                 </CardItem>
@@ -149,5 +204,7 @@ let styles=StyleSheet.create({
 
 interface Props {}
 interface State {
+    dialogVisible:boolean
     events:any
+    chosenDate:any
 }

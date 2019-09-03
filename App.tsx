@@ -5,11 +5,71 @@ import EventQRCode from './components/UserDashboard/code'
 import UserDashboard from './components/UserDashboard/main'
 import OrgDashboard from './components/OrgDashboard/main'
 import EventScanner from './components/OrgDashboard/eventScanner'
+import EventView from './components/OrgDashboard/eventView'
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Reactotron from 'reactotron-react-native'
-import { RNCamera } from 'react-native-camera';
+import { createAppContainer, createStackNavigator } from 'react-navigation'
 
 export default class App extends Component<Props,State> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      initialRoute: 'Login'
+    }
+  }
+
+  rootStack = () => {
+    const StackNavigator = createStackNavigator({
+      Login :{
+        screen: Login,
+        navigationOptions: ({navigation}) => ({
+          header: null,
+        })
+      },
+      Signup: {
+        screen: Signup,
+        navigationOptions: ({navigation}) => ({
+          header: null,
+        })
+      },
+      UserDashboard: {
+        screen: UserDashboard,
+        navigationOptions: ({navigation}) => ({
+          header:null
+        })
+      },
+      EventQRCode:{
+        screen: EventQRCode,
+        navigationOptions: ({navigation}) => ({
+          header: null,
+        })
+      },
+      OrgDashboard:{
+        screen: OrgDashboard,
+        navigationOptions: ({navigation}) => ({
+          header: null,
+        })
+      },
+      EventView:{
+        screen: EventView,
+        navigationOptions: ({navigation}) => ({
+          header: null,
+        })
+      },
+      EventScanner:{
+        screen: EventScanner,
+        navigationOptions: ({navigation}) => ({
+          header: null,
+        })
+      }
+    }, {
+      initialRouteName: this.state.initialRoute,
+    }) 
+    
+    const AppContainer = createAppContainer(StackNavigator)
+    return <AppContainer />
+   }
+
   render() {
     Reactotron
     .configure({
@@ -30,10 +90,11 @@ export default class App extends Component<Props,State> {
       // <Login />
       // <Signup />
       // <EventQRCode />
-      // <UserDashboard />
+      <UserDashboard />
       // <OrgDashboard />
-      <EventScanner />
-      
+      // <EventScanner />
+      // <EventView />
+      // <this.rootStack />
     );
   }
 }
@@ -47,4 +108,6 @@ const styles = StyleSheet.create({
 });
 
 interface Props {}
-interface State {}
+interface State {
+  initialRoute:string
+}

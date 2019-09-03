@@ -27,8 +27,8 @@ export default class Signup extends Component<Props,State>{
     }
 
     signupEmployee=()=>{
-        if(this.state.orgName && this.state.orgEmail && this.state.orgUserName && this.state.orgPassword){
-        if(this.state.orgPassword===this.state.orgConfirmPassword){
+        if(this.state.name && this.state.username && this.state.email && this.state.password && this.state.confirmPassword){
+        if(this.state.password===this.state.confirmPassword){
         this.setState({loadingEmployeeSignup:true})
         let user={
             name:this.state.name,
@@ -38,21 +38,19 @@ export default class Signup extends Component<Props,State>{
             code:0
         }
 
-        axios.post('https://enigmatic-reaches-41194.herokuapp.com/userSignup',user,{
-            headers:{
-                'Content-Type':'application/json'
-            }
-        })
+        axios.post('http://192.168.43.22:3000/userSignup',user)
         .then((res)=>{
+            this.setState({loadingEmployeeSignup:false})
             if(res.data.code==0){
-                this.setState({loadingEmployeeSignup:false})
                 Toast.show({
                     text: res.data.message,
                     buttonText: "Okay",
                     type: "success"
                 })
+                this.props.navigation.navigate('Login')
             }
             else{
+                this.setState({loadingEmployeeSignup:false})
                 Toast.show({
                     text: res.data.message,
                     buttonText: "Okay",
@@ -60,7 +58,8 @@ export default class Signup extends Component<Props,State>{
                 })
             }
         }).catch((err)=>{
-            Reactotron.log(err)
+            this.setState({loadingEmployeeSignup:false})
+            Reactotron.log("bhai ye ho hi nahi raha hai",err)
         })
         }
         else{
@@ -81,7 +80,7 @@ export default class Signup extends Component<Props,State>{
     }
 
     signupOrg=()=>{
-        if(this.state.orgName && this.state.orgEmail && this.state.orgUserName && this.state.orgPassword){
+        if(this.state.orgName && this.state.orgUserName && this.state.orgEmail && this.state.orgPassword && this.state.orgPassword){
         if(this.state.orgPassword===this.state.orgConfirmPassword){
             this.setState({loadingOrgSignup:true})
         let org={
@@ -89,7 +88,7 @@ export default class Signup extends Component<Props,State>{
             orgUserName:this.state.orgUserName,
             orgEmail:this.state.orgEmail,
             orgPassword:this.state.orgPassword,
-            code:1
+            orgCode:1
         }
 
         axios.post('https://enigmatic-reaches-41194.herokuapp.com/orgSignup',org,{
@@ -105,6 +104,7 @@ export default class Signup extends Component<Props,State>{
                     buttonText: "Okay",
                     type: "success"
                 })
+                this.props.navigation.navigate('Login')
             }
             else{
                 Toast.show({
@@ -245,7 +245,9 @@ let styles=StyleSheet.create({
     }
 })
 
-interface Props {}
+interface Props {
+    navigation:any
+}
 interface State {
     showToast:false
     loadingEmployeeSignup:boolean

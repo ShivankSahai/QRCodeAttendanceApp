@@ -8,86 +8,26 @@ export default class UserEvents extends Component<Props,State>{
     constructor(props){
         super(props)
         this.state={
-            userId:'5d335d09e09bdc0017dd4c52',
-            events:[
-                {
-                    name:'Learn to Compete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinery',
-                    status:-1
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:0
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:1
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:-1
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:-1
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:-1
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:-1
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:-1
-                },
-                {
-                    name:'Learn to Cogdfgdfgdfgdfgmete 2.0',
-                    orgId:'556677',
-                    orgName:'Association for Compiuting Machinerydsgsdgfgfdgdfgdfgd',
-                    status:-1
-                },
-            ]    
+            userId:"5d6388a2397f240017d6285c",
+            events:[]    
         }
     }
 
-    // componentDidMount=()=>{
-    //     let userId='5d335d09e09bdc0017dd4c52'
-    //     let token=''
-    //     axios.post('https://enigmatic-reaches-41194.herokuapp.com/userEvents',{userId},{
-    //         headers:{
-    //             'Content-Type':'application/json',
-    //             'Authorization':`Bearer ${token}`
-    //         }
-    //     }).then((res)=>{
-    //         Reactotron.log("Done",res)
-    //         this.setState({
-    //             events:res.data.events
-    //         })
-    //     }).catch((err)=>{
-    //         Reactotron.log("Error",err)
-    //     })
-    // }
-
-    generateQR=(orgId,eventId)=>{
-        let qrString=orgId+'_'+eventId+'_'+this.state.userId
+    componentDidMount=()=>{
+        let token=''
+        axios.post('https://enigmatic-reaches-41194.herokuapp.com/userEvents',{userId:this.state.userId},{
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`
+            }
+        }).then((res)=>{
+            Reactotron.log("Done",res)
+            this.setState({
+                events:res.data.events
+            })
+        }).catch((err)=>{
+            Reactotron.log("Error",err)
+        })
     }
 
     render(){
@@ -97,7 +37,7 @@ export default class UserEvents extends Component<Props,State>{
                 <ScrollView>
                 {
                     this.state.events && this.state.events.length>0 && this.state.events.map((val,ind)=>(
-                        <TouchableWithoutFeedback onPress={()=>{this.generateQR(val.orgId,val._id)}}>
+                        <TouchableWithoutFeedback onPress={()=>{this.props.navigation.navigate('EventQRCode',val)}}>
                             <Card>
                                 <CardItem>
                                 <Body style={{flexDirection:'row',justifyContent:'center'}}>
@@ -131,7 +71,9 @@ let styles=StyleSheet.create({
     }
 })
 
-interface Props {}
+interface Props {
+    navigation:any
+}
 interface State {
     userId:string
     events:any
